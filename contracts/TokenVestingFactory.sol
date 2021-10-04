@@ -5,10 +5,12 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./TokenVesting.sol";
 
+
 contract TokenVestingFactory is Ownable {
   using SafeERC20 for IERC20;
 
   mapping (address => address) public vestingForAddress;
+
 
   event VestingDeployed(
     address indexed vestingAddress,
@@ -32,6 +34,7 @@ contract TokenVestingFactory is Ownable {
     address tokenHolder
   ) public returns (address vestingAddress){
     require(vestingForAddress[beneficiary] == address(0), "User is already vested");
+
     bytes memory bytecode = abi.encodePacked(
       type(TokenVesting).creationCode,
       abi.encode(
@@ -49,6 +52,8 @@ contract TokenVestingFactory is Ownable {
     
     TokenVesting vesting = TokenVesting(vestingAddress);
 
+    vesting.initialize(beneficiary, start, cliffDuration, duration, revocable);
+
     vesting.transferOwnership(owner);
 
     token.safeTransferFrom(tokenHolder, address(vesting), amount);
@@ -61,7 +66,7 @@ contract TokenVestingFactory is Ownable {
       duration,
       revocable
     );
-  
+
     return vestingAddress;
   }
 }
