@@ -7,7 +7,7 @@ interface IWETHGateway {
   function withdrawETH(uint256 amount, address to) external;
 }
 
-contract Escrow {
+contract EtherEscrow {
   address arbiter;
   address depositor;
   address beneficiary;
