@@ -1,13 +1,14 @@
 pragma solidity ^0.8.0;
 
-import "./interfaces/IERC20.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface IWETHGateway {
   function depositETH(address onBehalfOf, uint16 referralCode) external payable;
   function withdrawETH(uint256 amount, address to) external;
 }
 
-contract EtherEscrow {
+contract EtherEscrow is Initializable{
   address arbiter;
   address depositor;
   address beneficiary;
@@ -15,7 +16,7 @@ contract EtherEscrow {
   IWETHGateway gateway = IWETHGateway(0xA61ca04DF33B72b235a8A28CfB535bb7A5271B70);
   IERC20 aWETH = IERC20(0x87b1f4cf9BD63f7BBD3eE1aD04E8F52540349347);
 
-  constructor(address _arb, address _ben) payable {
+  function initialize (address _arb, address _ben) public payable {
     arbiter = _arb;
     beneficiary = _ben;
     initialDeposit = msg.value;
