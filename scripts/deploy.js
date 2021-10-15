@@ -14,19 +14,19 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Disperse = await hre.ethers.getContractFactory("Disperse");
-  const disperse = await Disperse.deploy();
+  const AirdropFactory = await hre.ethers.getContractFactory("AirdropFactory");
+  const airdropFactory = await AirdropFactory.deploy();
 
-  await disperse.deployed();
+  await airdropFactory.deployed();
 
-  console.log("Disperse deployed to:", disperse.address);
+  console.log("AirdropFactory deployed to:", airdropFactory.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error(error);
     process.exit(1);
   });
