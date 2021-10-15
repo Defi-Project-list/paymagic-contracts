@@ -25,7 +25,7 @@ module.exports = {
   solidity: "0.8.7",
   networks: {
     kovan: {
-      url: INFURA_KOVAN_KEY,
+      url: `https://kovan.infura.io/v3/${INFURA_KOVAN_KEY}`,
       accounts: [`0x${KOVAN_PRIVATE_KEY}`],
     },
   },
